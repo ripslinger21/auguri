@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Compleanno di Rossella 👑🦖</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #fce4ec;
+    text-align: center;
+    transition: background-color 0.8s;
+  }
+  #container {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    max-width: 500px;
+    margin: 20px;
+  }
+  h1 { color: #d81b60; font-size: 1.8em; }
+  .countdown { font-size: 3em; font-weight: bold; color: #880e4f; margin: 20px 0; }
+  
+  /* Stili per il giorno del compleanno */
+  .birthday-mode {
+    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+  }
+  .birthday-message {
+    display: none;
+    animation: pop 1s infinite alternate;
+  }
+  .birthday-message h2 {
+    font-size: 2.5em;
+    color: #e91e63;
+    margin-bottom: 10px;
+  }
+  .emojis { font-size: 2em; margin: 20px 0; }
+  .dino-quote { font-size: 0.9em; color: #555; font-style: italic; }
+  
+  @keyframes pop {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.05); }
+  }
+</style>
+</head>
+<body>
+
+<div id="container">
+  <!-- Vista Conto alla Rovescia -->
+  <div id="countdown-view">
+    <h1>Giorni all'incoronazione (e al compleanno) di Rossella 📖👑</h1>
+    <div class="countdown" id="days-left">...</div>
+  </div>
+
+  <!-- Vista Compleanno -->
+  <div id="birthday-view" class="birthday-message">
+    <h2>🎉 TANTI AUGURI ROSSELLA! 🎆</h2>
+    <div class="emojis">👑 👸 📖 ✨ 🦖 🦕 🌋 🎊</div>
+    <p class="dino-quote">"Perfino i dinosauri hanno interrotto l'estinzione per festeggiare la loro principessa preferita!"</p>
+  </div>
+</div>
+
+<script>
+  // ⚠️ INSERISCI QUI LA DATA DEL COMPLEANNO
+  const meseCompleanno = 10; // Esempio: 10 per Ottobre
+  const giornoCompleanno = 15; // Esempio: 15
+
+  function checkBirthday() {
+    const oggi = new Date();
+    const annoCorrente = oggi.getFullYear();
+    
+    let dataCompleanno = new Date(annoCorrente, meseCompleanno - 1, giornoCompleanno);
+    
+    // Azzera ore e minuti per un confronto preciso sulla mezzanotte
+    oggi.setHours(0, 0, 0, 0);
+    dataCompleanno.setHours(0, 0, 0, 0);
+
+    if (oggi.getTime() === dataCompleanno.getTime()) {
+      // È il compleanno! Nascondi il countdown e mostra la festa
+      document.body.classList.add('birthday-mode');
+      document.getElementById('countdown-view').style.display = 'none';
+      document.getElementById('birthday-view').style.display = 'block';
+    } else {
+      // Se il compleanno di quest'anno è già passato, calcola i giorni per l'anno prossimo
+      if (oggi > dataCompleanno) {
+        dataCompleanno.setFullYear(annoCorrente + 1);
+      }
+      
+      const differenzaMillisecondi = dataCompleanno - oggi;
+      const giorniMancanti = Math.ceil(differenzaMillisecondi / (1000 * 60 * 60 * 24));
+      
+      document.getElementById('days-left').innerText = giorniMancanti;
+    }
+  }
+
+  checkBirthday();
+</script>
+</body>
+</html>
